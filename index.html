@@ -1,0 +1,149 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Piano Kit</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div id="piano">
+      <img class="logo" src="./kalawaja-piano-logo.png" alt="kalawaja Logo" />
+      <div class="keys">
+        <div data-key="81" class="key">
+            <kbd>Q</kbd>
+            <span class="sound">A0</span>
+        </div>
+        <div data-key="87" class="key black--key">
+            <kbd>W</kbd>
+            <span class="sound">A1</span>
+        </div>
+        <div data-key="69" class="key black--key">
+            <kbd>E</kbd>
+            <span class="sound">A2</span>
+        </div>
+        <div data-key="82" class="key">
+            <kbd>R</kbd>
+            <span class="sound">A3</span>
+        </div>
+        <div data-key="84" class="key black--key">
+            <kbd>T</kbd>
+            <span class="sound">A4</span>
+        </div>
+        <div data-key="89" class="key black--key">
+            <kbd>Y</kbd>
+            <span class="sound">A5</span>
+        </div>
+        <div data-key="85" class="key black--key">
+            <kbd>U</kbd>
+            <span class="sound">A6</span>
+        </div>
+
+        <div data-key="65" class="key">
+            <kbd>A</kbd>
+            <span class="sound">A7</span>
+        </div>
+        <div data-key="83" class="key black--key">
+            <kbd>S</kbd>
+            <span class="sound">Ab1</span>
+        </div>
+        <div data-key="68" class="key black--key">
+            <kbd>D</kbd>
+            <span class="sound">Ab2</span>
+        </div>
+        <div data-key="70" class="key">
+            <kbd>F</kbd>
+            <span class="sound">Ab3</span>
+        </div>
+        <div data-key="71" class="key black--key">
+            <kbd>G</kbd>
+            <span class="sound">Ab4</span>
+        </div>
+        <div data-key="72" class="key black--key">
+            <kbd>H</kbd>
+            <span class="sound">Ab5</span>
+        </div>
+        <div data-key="74" class="key black--key">
+            <kbd>J</kbd>
+            <span class="sound">Ab6</span>
+        </div>
+
+        <div data-key="90" class="key">
+            <kbd>Z</kbd>
+            <span class="sound">Ab7</span>
+        </div>
+        <div data-key="88" class="key black--key">
+            <kbd>X</kbd>
+            <span class="sound">B0</span>
+        </div>
+        <div data-key="67" class="key black--key">
+            <kbd>C</kbd>
+            <span class="sound">B1</span>
+        </div>
+        <div data-key="86" class="key">
+            <kbd>V</kbd>
+            <span class="sound">B2</span>
+        </div>
+        <div data-key="66" class="key black--key">
+            <kbd>B</kbd>
+            <span class="sound">B3</span>
+        </div>
+        <div data-key="78" class="key black--key">
+            <kbd>N</kbd>
+            <span class="sound">B4</span>
+        </div>
+        <div data-key="77" class="key black--key">
+            <kbd>M</kbd>
+            <span class="sound">B5</span>
+        </div>
+      </div>
+    </div>
+
+    <audio data-key="81" src="sound/A0.mp3"></audio>
+    <audio data-key="87" src="sound/A1.mp3"></audio>
+    <audio data-key="69" src="sound/A2.mp3"></audio>
+    <audio data-key="82" src="sound/A3.mp3"></audio>
+    <audio data-key="84" src="sound/A4.mp3"></audio>
+    <audio data-key="89" src="sound/A5.mp3"></audio>
+    <audio data-key="85" src="sound/A6.mp3"></audio>
+
+    <audio data-key="65" src="sound/A7.mp3"></audio>
+    <audio data-key="83" src="sound/Ab1.mp3"></audio>
+    <audio data-key="68" src="sound/Ab2.mp3"></audio>
+    <audio data-key="70" src="sound/Ab3.mp3"></audio>
+    <audio data-key="71" src="sound/Ab4.mp3"></audio>
+    <audio data-key="72" src="sound/Ab5.mp3"></audio>
+    <audio data-key="74" src="sound/Ab6.mp3"></audio>
+
+    <audio data-key="90" src="sound/Ab7.mp3"></audio>
+    <audio data-key="88" src="sound/B0.mp3"></audio>
+    <audio data-key="67" src="sound/B1.mp3"></audio>
+    <audio data-key="86" src="sound/B2.mp3"></audio>
+    <audio data-key="66" src="sound/B3.mp3"></audio>
+    <audio data-key="78" src="sound/B4.mp3"></audio>
+    <audio data-key="77" src="sound/B5.mp3"></audio>
+
+    <script>
+        function playSound(piano) {
+            const audio = document.querySelector(`audio[data-key="${piano.keyCode}"]`);
+            const key = document.querySelector(`div[data-key="${piano.keyCode}"]`);
+            if (!audio) return;
+
+            key.classList.add('playing');
+            audio.currentTime = 0;
+            audio.play();
+        }
+
+        function removeTransition(piano) {
+            if (piano.propertyName !== 'transform') return;
+            piano.target.classList.remove('playing');
+        }
+
+        const keys = Array.from(document.querySelectorAll('.key'));
+        keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+        window.addEventListener('keydown', playSound);
+    </script>
+
+  </body>
+</html>
